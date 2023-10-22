@@ -1,0 +1,51 @@
+.container {
+
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: 40px auto;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 0 2px 1px rgb(145, 145, 145);
+}
+
+.image {
+  width: 100px;
+  height: 110px;
+  margin: 10px;
+  margin-right: 50px;
+}
+
+p {
+  color: rgb(7, 5, 5);
+}
+
+.cartButton {
+  width: max-content;
+  height: 20px;
+  display: flex;
+  margin: 40px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(237, 10, 10);
+  color: rgb(238, 238, 238);
+  border: none;
+  box-shadow: 0 0 0 1px gray;
+  border-radius: 2px;
+
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-left: 20px;
+
+}
+
+.cardPrice {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+
+}
