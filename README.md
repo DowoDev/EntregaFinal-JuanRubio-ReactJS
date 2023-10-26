@@ -3,7 +3,7 @@
 
 <h1>ENTREGA FINAL</h1>
 <h2>QINQELA | SHOP - React JS</h2>
-# CoffeeShop - Proyecto de Comercio Electrónico
+# QINQELA CoffeeShop - Proyecto de E-Commerce
 
 Qinqela CoffeeShop es un proyecto de desarrollo web de E-Commerce enfocado en la venta de productos relacionados con el café. Este proyecto fue creado con el propósito de presentar lo aprendido en el Curso de ReactJS dictado por el Profesor Franco Dioaquez y seguir avanzando en los estudios de desarrollo front-end y aprender a construir aplicaciones web dinámicas con ReactJS.
 
@@ -70,8 +70,9 @@ Herramientas Utilizadas:
 
 
 <h3>GIF FUNCIONAMIENTO</h3>
+<img src="public/Final-JuanRubio.gif">
+</img>
 
-<img>http://i.imgur.com/dmdEapSh.gif</img>
 
 - PAGINA PRINCIPAL
 
