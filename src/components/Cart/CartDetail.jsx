@@ -4,7 +4,7 @@ import styles from './style.module.css'
 import { addDoc, collection, getFirestore } from "firebase/firestore"
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2';
-import CarritoVacio from '../Cards/CarritoVacio'
+import CarritoVacio from './CarritoVacio'
 
 
 const CartDetail = () => {
@@ -24,49 +24,55 @@ const CartDetail = () => {
   const [orderId,] = useState("")
   const { cart, removeItem, clear } = useContext(CartContext)
   const [isCartEmpty, setIsCartEmpty] = useState(false);
-
+  const [showForm, setShowForm] = useState(false); 
 
   useEffect(() => {
-
     setIsCartEmpty(cart.length === 0);
   }, [cart]);
 
   const handleRemoveItem = (id, nombre) => {
     Swal.fire({
-      title: `Deseas eliminar ${nombre} BLEND del carrito`,
+      title: `Deseas eliminar \n BLEND ${nombre} \n del Carrito`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#7fff00',
       cancelButtonColor: '#dc143c',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
-
     }).then((result) => {
       if (result.isConfirmed) {
-
         removeItem(id);
-
-        Swal.fire('Eliminado', `${nombre} BLEND SE ELIMINÓ DEL CARRITO`, 'success');
+        Swal.fire('Eliminado', `BLEND ${nombre} SE ELIMINÓ DEL CARRITO`, 'success');
       }
     });
   };
 
   const navigate = useNavigate()
 
+  const calcularSubtotal = (item) => {
+    return item.price * item.quantity;
+  };
+  const calcularTotal = (cart) => {
+    return cart.reduce((total, item) => {
+      return total + calcularSubtotal(item);
+    }, 0);
+  };
+
+  const subtotalCart = calcularTotal(cart);
   const addToCart = () => {
     const precioTotal = cart.reduce((total, item) => {
       return total + item.price * item.quantity;
     }, 0);
 
+    const precioTotalProducto = cart.reduce((total, item) => {
+      return item.price * item.quantity;
+    }, 0);
     const purchase = {
       buyer,
       items: cart,
       date: new Date(),
       total: precioTotal,
     };
-
-    console.log(purchase);
-
 
     const db = getFirestore();
     const orderCollection = collection(db, "orders");
@@ -105,79 +111,73 @@ const CartDetail = () => {
     if (!buyer.email) {
       errorLocal.email = "El email es obligatorio"
     };
-    //  []
     if (Object.keys(errorLocal).length === 0) {
-
       addToCart();
     } else {
-
       setErrors(errorLocal);
     }
   }
 
   return (
-
     <div className='carrito'>
-
 
       {isCartEmpty ? (
         <CarritoVacio />
       ) : (
         cart.map((el) => (
-          <div className={styles.container} key={el.id}>
+          <div className='containerCarrito' key={el.id}>
             {el && (
-              <div className={styles.cardBody}>
-                <p>Articulo: {el.title}</p>
-                <p>Cantidad: {el.quantity}</p>
+              <div className='carritoName'>
+                <p>BLEND {el.title} <br />{el.quantity} &nbsp;&times; $ {el.price}</p>
               </div>
             )}
-            <img src={el.img} className={styles.image} />
-            <p className={styles.cardPrice}>Precio: $ {el.price}</p>
-            <button onClick={() => handleRemoveItem(el.id, el.title)} className={styles.cartButton}>
-              X
-            </button>
+            <div>
+              <img src={el.img} className='carritoImg'/>
+            </div>
+            <p className='priceMax2'>SUBTOTAL &nbsp; $ {calcularSubtotal(el)}</p>
+            <button onClick={() => handleRemoveItem(el.id, el.title)} className='cartButton'>&times;</button>
           </div>
         ))
       )}
+      {cart.length > 0 && !showForm && (
+        <button className='btn btn-primary' onClick={() => setShowForm(true)}>TERMINA TU COMPRA</button>
+      )}
 
-      <div className='datos'>
-        <h1>INGRESE SUS DATOS</h1>
-        <div>
-          <label htmlFor="name">Nombre </label>
-          <input className={errors.name ? "error" : ""} onChange={handleChange} type="text" name="name" id="name" value={buyer.name} />
-          {errors.name && <span> {errors.name}</span>}
-        </div>
-        <div>
-          <label htmlFor="adress">Dirección </label>
-          <input className={errors.adress ? "error" : ""} onChange={handleChange} type="text" name="adress" id="adress" value={buyer.adress} />
-          {errors.adress && <span> {errors.adress}</span>}
-        </div>
-        <div>
-          <label htmlFor="phone">Teléfono </label>
-          <input className={errors.phone ? "error" : ""} onChange={handleChange} type="text" name="phone" id="phone" value={buyer.phone} />
-          {errors.phone && <span> {errors.phone}</span>}
-        </div>
-        <div>
-          <label htmlFor="email">Email </label>
-          <input className={errors.email ? "error" : ""} onChange={handleChange} type="text" name="email" id="email" value={buyer.email} />
-          {errors.email && <span> {errors.email}</span>}
-        </div>
+      {showForm && (
+        <>
+          <h2 className='total'>TOTAL DEL CARRITO $ {calcularTotal(cart)}</h2>
+          <br />
+          <div className='datos'>
+            <h1>INGRESE SUS DATOS</h1>
+            <div>
+              <label htmlFor="name">Nombre </label>
+              <input className={errors.name ? "error" : ""} onChange={handleChange} type="text" name="name" id="name" value={buyer.name} />
+              {errors.name && <span> {errors.name}</span>}
+            </div>
+            <div>
+              <label htmlFor="adress">Dirección </label>
+              <input className={errors.adress ? "error" : ""} onChange={handleChange} type="text" name="adress" id="adress" value={buyer.adress} />
+              {errors.adress && <span> {errors.adress}</span>}
+            </div>
+            <div>
+              <label htmlFor="phone">Teléfono </label>
+              <input className={errors.phone ? "error" : ""} onChange={handleChange} type="text" name="phone" id="phone" value={buyer.phone} />
+              {errors.phone && <span> {errors.phone}</span>}
+            </div>
+            <div>
+              <label htmlFor="email">Email </label>
+              <input className={errors.email ? "error" : ""} onChange={handleChange} type="text" name="email" id="email" value={buyer.email} />
+              {errors.email && <span> {errors.email}</span>}
+            </div>
+          </div>
+          <br />
+          <button className='btn btn-primary' onClick={onSubmit}>COMPLETAR COMPRA</button>
+        </>
+      )}
 
-      </div>
-
-      {
-        cart.length > 0 &&
-        <div>
-
-          <button className='btn btn-primary' onClick={onSubmit}>TERMINA TU COMPRA </button>
-
-        </div>
-      }
-      {
-        orderId && <span>Order created: {orderId}</span>
-      }
+      {orderId && <span>Order created: {orderId}</span>}
     </div>
-  )
-}
+  );
+};
 
-export default CartDetail
+export default CartDetail;

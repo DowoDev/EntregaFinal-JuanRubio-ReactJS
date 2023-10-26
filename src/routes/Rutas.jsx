@@ -12,11 +12,12 @@ const Rutas = () => {
   return (
     <Routes>
       <Route path='/' element={<Inicio />} />
-      <Route path='/About' element={<Nosotros />} />
+      <Route path='/nosotros' element={<Nosotros />} />
       <Route path='/category/:categoryid' element={<Categoria />} />
-      <Route path='/detalle/:id' element={<Producto />} />
+      <Route path='/producto/:id' element={<Producto />} />
       <Route path='/cart' element={<Carrito />} />
       <Route path='/checkout/:orderId' element={<Compra />} />
+      
     </Routes>
   )
 }

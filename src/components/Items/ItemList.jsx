@@ -7,9 +7,9 @@ const ItemList = ({ items }) => {
   return (
     <>
       {
-        items.map((item) => (
-          <Col md={4} xl={3} sm={12} key={item.id} >
-            <CardList item={item} />
+        items.map((item, index) => (
+          <Col md={4} xl={3} sm={12} key={item.id}>
+            <CardList item={item} index={index} />
 
           </Col>
         ))

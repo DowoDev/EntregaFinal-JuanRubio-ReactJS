@@ -5,7 +5,7 @@ import ItemDetailContainer from '../components/Details/ItemDetailContainer'
 const Producto = () => {
   const { id } = useParams()
   return (
-    <div>
+    <div className='bodyProducto'>
       <ItemDetailContainer id={id} />
     </div>
   )

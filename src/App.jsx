@@ -12,6 +12,7 @@ function App() {
       <CartContextProvider>
         <NavBar />
         <Rutas />
+        <ToastContainer />
       </CartContextProvider>
     </div>
   )

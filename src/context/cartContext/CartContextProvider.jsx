@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import CartContext from './CartContext'
+import React, { useState, useEffect } from 'react'
+import CartContext from './CartContext';
+
 const CartContextProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
@@ -29,10 +30,6 @@ const CartContextProvider = ({ children }) => {
   const isInCart = (id) => {
     return cart.some((cartItem) => cartItem.id === id);
   };
-
-
-
-
 
   const removeItem = (id, q) => {
     const newCart = cart.filter((el) => el.id !== id);

@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react'
 import CardList from '../Cards/CardList';
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 
-const ItemCategory = ({ category }) => {
-  console.log('Category:', category);
-  const categoryMapping = {
 
-    strong : 'Strong', 
-    sweetest : 'Sweetest',
-    green : 'Green',
-    coolest : 'Coolest',
+const ItemCategory = ({ category }) => {
+
+  const listaCategorias = {
+    strong: 'Strong',
+    sweetest: 'Sweetest',
+    green: 'Green',
+    coolest: 'Coolest',
   };
 
-  // const actualCategory = categoryMapping[category.toLowerCase()];
-
+  const categorias = listaCategorias[category.toLowerCase()];
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,8 +21,7 @@ const ItemCategory = ({ category }) => {
     const fetchData = () => {
       const db = getFirestore();
       const itemCollection = collection(db, "items");
-      const q = query(itemCollection, where("category", "==", categoryMapping));
-
+      const q = query(itemCollection, where("category", "==", categorias));
 
       getDocs(q)
         .then(snapshot => {
@@ -43,20 +41,24 @@ const ItemCategory = ({ category }) => {
   }, [category])
 
   return (
-
-    <div className='d-flex justify-content-center align-items-center'>
-
-      <div className="container">
-        <div className='row '>
-          {items !== null && items.map((item) => (
-            <div key={item.id} className='col-md-4 mb-4'>
-              <CardList item={item} />
-            </div>
-          ))}
+    <>
+      <h3 className='total2'> ESTAS VIENDO LA CATEGORIA {categorias}</h3>
+      <div className='d-flex justify-content-center align-items-center'>
+        <div className="container">
+          <div className='row '>
+            {items !== null && items.map((item) => (
+              <div key={item.id} className='col-xl-3 col-md-4 col-sm-12'>
+                <CardList className='col-xl-3 col-md-4 col-sm-12' item={item} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
+
   )
 }
 
 export default ItemCategory
+
+
