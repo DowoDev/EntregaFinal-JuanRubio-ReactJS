@@ -11,7 +11,7 @@ const CartWidget = () => {
     <div className="carritoContainer">
       <Link className="nav-link active fs-5" to="/cart">
         <img
-            src='/src/assets/logos/coffee-togo-regular-60.png'
+            src='../src/assets/logos/coffee-togo-regular-60.png'
             width='50px'
             height='55.12px'
             alt='Carrito'

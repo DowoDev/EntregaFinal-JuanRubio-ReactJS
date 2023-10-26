@@ -33,7 +33,7 @@ const CardList = ({ item }) => {
     <div>
       <Card className='card cardList'>
         <div className='logos'>
-          <img className='logo' src="/src/assets/logos/cup_logo.png" alt="" />
+          <img className='logo' src="./src/assets/logos/cup_logo.png" alt="" />
         </div>
         <div className='img-container'>
           <Card.Img variant="top" className='card-img-top' src={item.img} />
