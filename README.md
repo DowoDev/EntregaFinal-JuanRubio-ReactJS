@@ -70,8 +70,9 @@ Herramientas Utilizadas:
 
 
 <h3>GIF FUNCIONAMIENTO</h3>
+<img src="public/Final-JuanRubio.gif">
+</img>
 
-<img>http://i.imgur.com/dmdEapSh.gif</img>
 
 - PAGINA PRINCIPAL
 
